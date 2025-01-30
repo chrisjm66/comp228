@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Roster {	
 	public static void main(String[] args) {
@@ -16,11 +17,16 @@ public class Roster {
 		roster.add(hLe);
 		
 		roster.sort(null); // using null uses the compareTo of the class
-		
+		System.out.println("\nSorted");
 		for(Student s : roster) {
 			System.out.println(s);
 		}
 		
+		Collections.shuffle(roster);
+		System.out.println("\nShuffled");
+		for(Student s : roster) {
+			System.out.println(s);
+		}
 		
 	}
 

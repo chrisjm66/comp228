@@ -87,6 +87,6 @@ public class Student implements Comparable<Student> {
 		*/
 		
 		// this does the same thing and is easier to read
-		return this.lastName.compareTo(other.getLastName());
+		return this.favSnack.compareToIgnoreCase(other.getFavSnack());
 	}
 }
