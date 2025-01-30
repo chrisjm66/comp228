@@ -13,7 +13,7 @@ public class Main {
 		
 		Student testStudent = new Student();
 		testStudent.setFirstName("Matthew");
-		testStudent.setLastName("Mangan");
+		testStudent.setLastName("Matthies");
 		testStudent.setFavSnack("nuts");
 		testStudent.setCredits(3);
 		testStudent.setCostBeverage(80f);
