@@ -1,5 +1,5 @@
 
-public class Student {
+public class Student implements Comparable<Student> {
 	private String firstName;
 	private String lastName;
 	private String favSnack;
@@ -60,5 +60,33 @@ public class Student {
 	
 	public String toString() {
 		return String.format("Name: %s %s \nFavorite Food: %s \nCredits: %2d \nBev Cost: %.2f\n", firstName, lastName, favSnack, credits, costBeverage);
+	}
+	
+	@Override
+	// Compares last name.
+	public int compareTo(Student other) {
+		/* DONT DO THIS!! THIS IS A WASTE OF TIME.
+		/* DONT DO THIS!! THIS IS A WASTE OF TIME.
+		/* DONT DO THIS!! THIS IS A WASTE OF TIME.
+		/* DONT DO THIS!! THIS IS A WASTE OF TIME.
+		// get uppercase name so ascii conversion is easier
+		String otherLastName = other.getLastName().toUpperCase();
+		String thisLastName = this.lastName.toUpperCase();
+		
+		for(int i = 0; i < thisLastName.length(); i++) {
+			// if thisLastName higher in alphabet
+			if (thisLastName.charAt(i) > otherLastName.charAt(i)) {
+				return 1;
+				// if thisLastName lower in alphabet
+			} else if (thisLastName.charAt(i) < otherLastName.charAt(i)) {
+				return -1;
+			}
+		}
+		// if names equal
+		return 0;
+		*/
+		
+		// this does the same thing and is easier to read
+		return this.lastName.compareTo(other.getLastName());
 	}
 }

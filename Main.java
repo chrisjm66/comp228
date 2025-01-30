@@ -13,7 +13,7 @@ public class Main {
 		
 		Student testStudent = new Student();
 		testStudent.setFirstName("Matthew");
-		testStudent.setLastName("Matthies");
+		testStudent.setLastName("Mangan");
 		testStudent.setFavSnack("nuts");
 		testStudent.setCredits(3);
 		testStudent.setCostBeverage(80f);
@@ -21,5 +21,6 @@ public class Main {
 		
 		System.out.println(testStudent);
 		
+		System.out.println(chris.compareTo(testStudent));
 	}
 }
