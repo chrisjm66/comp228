@@ -25,7 +25,9 @@ public class ArrayStack<E> implements StackInterface<E> {
 
 	@Override
 	public E pop() {
-		return stack[top--];
+		E temp = stack[top];
+		stack[top--] = null;
+		return temp;
 	}
 
 	@Override
