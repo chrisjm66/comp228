@@ -6,15 +6,19 @@ public class StackPlay {
 
 	public static void main(String[] args) {
 		
-		LLStack<String> myStack = new LLStack<>();
+		ArrayStack<String> myStack = new ArrayStack<String>(3);
 		
 		System.out.println(myStack);
-		System.out.println(myStack.isEmpty() ? "stack is empty" : "stack is not empty");
-		System.out.println(myStack.isFull()  ? "stack is full"  : "stack is not full");
+		System.out.println(myStack.isEmpty() ? "stack is empty\n" : "stack is not empty\n");
+		System.out.println(myStack.isFull()  ? "stack is full\n"  : "stack is not full\n");
 		
 		myStack.push("Tomorrow");
 		myStack.push("Never");
 		myStack.push("Better");
+		
+		System.out.println(myStack.isEmpty() ? "stack is empty\n" : "stack is not empty\n");
+		System.out.println(myStack.isFull()  ? "stack is full\n"  : "stack is not full\n");
+		
 		System.out.println(myStack);
 		/* /
 		myStack.pop( );
