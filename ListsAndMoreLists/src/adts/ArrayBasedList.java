@@ -28,9 +28,21 @@ public class ArrayBasedList<E> implements ListInterface<E>, Iterable<E> {
 		this.initialCapacity = initialCapacity;
 	}
 	
+	protected void enlarge() {
+		E[] newBiggerArray = (E[]) new Object[numElements + DEFAULT_CAPACITY];
+		
+		for (int i = 0; i < list.length; i++) {
+			newBiggerArray[i] = list[i];
+		}
+		list = newBiggerArray;
+	}
 
 	@Override
 	public void add(E element) {
+		if (numElements == list.length) {
+			enlarge();
+		}
+		
 		list[numElements] = element;
 		numElements++;
 	}
