@@ -1,8 +1,7 @@
 package adts;
 
-import java.util.Iterator;
-
 import interfaces.ListInterface;
+import java.util.Iterator;
 import iterators.ArrayIterator;
 
 public class ArrayBasedList<E> implements ListInterface<E>, Iterable<E> {
@@ -29,16 +28,17 @@ public class ArrayBasedList<E> implements ListInterface<E>, Iterable<E> {
 	}
 	
 	protected void enlarge() {
-		E[] newBiggerArray = (E[]) new Object[numElements + DEFAULT_CAPACITY];
-		
+		E[] newBiggerArray = (E[]) new Object[list.length + initialCapacity];
 		for (int i = 0; i < list.length; i++) {
 			newBiggerArray[i] = list[i];
 		}
 		list = newBiggerArray;
 	}
+	
 
 	@Override
 	public void add(E element) {
+		
 		if (numElements == list.length) {
 			enlarge();
 		}
@@ -129,12 +129,14 @@ public class ArrayBasedList<E> implements ListInterface<E>, Iterable<E> {
     	}
 	}
     
-    @Override
     public Iterator<E> iterator() {
     	return new ArrayIterator<E>(list, numElements);
+    	//                          collection, size
     }
+
     
-	@Override
+    
+    @Override
 	public String toString() {
     	StringBuilder listStr = new StringBuilder();
     	for (int i = 0; i < numElements; i++) {

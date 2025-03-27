@@ -5,7 +5,10 @@ import adts.*;
 public class PlayWithLists {
 
 	public static void main(String[] args) {
-		ArrayBasedList<String> list1 = new ArrayBasedList<>();
+		/**/
+		//ArrayBasedList<String> list1 = new ArrayBasedList<>();
+		//ArraySortedList<String> list1 = new ArraySortedList<>();
+		DLList<String> list1 = new DLList<>();
 	      
 	    list1.add("Dykstra");
 		list1.add("Wirth");
@@ -18,9 +21,11 @@ public class PlayWithLists {
 	    
 	    System.out.println("get Dahl: " + list1.get("Dahl"));
 	    System.out.println("get 3rd item: " + list1.get(2));
-	    
-	    
-	    ArrayBasedList<Integer> list2 = new ArrayBasedList<Integer>();
+	    /**/
+	    /**/
+	    // ArrayBasedList<Integer> list2 =	new ArrayBasedList<Integer>(4);
+	    DLList<Integer> list2 =
+	    		new DLList<Integer>();
 		
 		for (int i = 0; i < 10; i++) {
 			list2.add(i);
@@ -28,13 +33,13 @@ public class PlayWithLists {
 		      
 	    System.out.println("\nDecimal Digits:\n" + list2);
 	    
-	    
+	    /*
 	    System.out.print("\nDecimal Digits using for loop: ");
 	    for (int j : list2) {
 	    	System.out.print(j + " ");
 	    }
 	    System.out.println("\n");
-	    
+	    /**/
 	    
 	    System.out.println(list2.remove(0) ? "0 removed" : "0 not found on the list");
 	    System.out.println(list2.remove(2) ? "2 removed" : "2 not found on the list");
@@ -51,5 +56,6 @@ public class PlayWithLists {
 			list2.remove(list2.get(0));
 		}
 	    System.out.println("\nWhere have all the digits gone?\n" + list2);
+        /**/	
 	}
 }

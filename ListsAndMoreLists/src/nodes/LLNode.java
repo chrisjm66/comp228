@@ -3,20 +3,20 @@ package nodes;
 
 public class LLNode<E> {
 	
-	private E info;
+	private E data;
 	private LLNode<E> next;
 	
-	public LLNode(E info) {
-		this.info = info;
+	public LLNode(E data) {
+		this.data = data;
 		next = null;
 	}
 	
-	public E getInfo() {
-		return info;
+	public E getData() {
+		return data;
 	}
 	
-	public void setInfo(E info) {
-		this.info = info;
+	public void setInfo(E data) {
+		this.data = data;
 	}
 	
 	public LLNode<E> getNext() {

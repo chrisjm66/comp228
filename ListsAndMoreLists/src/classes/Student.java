@@ -1,6 +1,6 @@
 package classes;
 import java.lang.Comparable;
-import java.lang.NullPointerException;
+
 //public class Student {
 public class Student implements Comparable<Student> {
 	
@@ -68,6 +68,4 @@ public class Student implements Comparable<Student> {
 		String studentStr = firstName + " eats " + favSnack;
 		return studentStr;
 	}
-	
-
 }
