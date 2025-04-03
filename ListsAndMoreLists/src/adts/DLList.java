@@ -3,12 +3,12 @@ package adts;
 import interfaces.ListInterface;
 import nodes.DLLNode;
 
-public class DLList<E> implements ListInterface<E> {
-	private DLLNode<E> head;
-	private DLLNode<E> tail;
-	private DLLNode<E> location;
-	private int size = 0;
-	private boolean found;
+public class DLList<E extends Comparable<E>> implements ListInterface<E> {
+	protected DLLNode<E> head;
+	protected DLLNode<E> tail;
+	protected DLLNode<E> location;
+	protected int numElements = 0;
+	protected boolean found;
 	
 	@Override
 	public void add(E element) {
@@ -17,12 +17,32 @@ public class DLList<E> implements ListInterface<E> {
 		if (head == null) {
 			head = tail = newNode;
 		} else {
-			newNode.setPrev(tail);
-			tail.setNext(newNode);
-			tail = newNode;
-			size++;
+			DLLNode<E> location = head;
+			while (location != null) {
+				if (element.compareTo(location.getData()) > 0) {
+					location = location.getNext();
+				} else {
+					break;
+				}
+			}
+			
+			if (location == null) {
+				newNode.setPrev(tail);
+				tail.setNext(newNode);
+				tail = newNode;
+			} else if
+				 (location == head) {
+					newNode.setNext(head);
+					head.setPrev(newNode);
+					head = newNode;
+				} else {
+					newNode.setPrev(location.getPrev());
+					newNode.setNext(location.getNext());
+					location.getPrev().setNext(newNode);
+					location.setPrev(newNode);
+				}
 		}
-		
+		numElements++;
 	}
 
 	@Override
@@ -39,7 +59,7 @@ public class DLList<E> implements ListInterface<E> {
 				location.getNext().setPrev(location.getPrev());
 				location.setData(null);
 				location = null;
-				size--;
+				numElements--;
 			}
 			return true;
 		}
@@ -49,12 +69,12 @@ public class DLList<E> implements ListInterface<E> {
 
 	@Override
 	public int size() {
-		return size;
+		return numElements;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return size == 0;
+		return numElements == 0;
 	}
 
 	@Override
