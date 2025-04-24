@@ -8,7 +8,7 @@ public class PlayWithLists {
 		/**/
 		//ArrayBasedList<String> list1 = new ArrayBasedList<>();
 		//ArraySortedList<String> list1 = new ArraySortedList<>();
-		DLList<String> list1 = new DLList<>();
+		DLList<String> list1 = new DLList<String>();
 	      
 	    list1.add("Dykstra");
 		list1.add("Wirth");
@@ -31,8 +31,22 @@ public class PlayWithLists {
 			list2.add(i);
 		}
 		      
+	    System.out.println("\nIterated backward:");
+		for (Integer i : list2) {
+			System.out.print(i + " ");
+		}
+		System.out.print("\n");
+
+		System.out.println("\nIterated forward:");
+		list2.setIterateForward(true);
+
+		for (Integer i : list2) {
+			System.out.print(i + " ");
+		}
+		System.out.print("\n");
+
 	    System.out.println("\nDecimal Digits:\n" + list2);
-	    
+
 	    /*
 	    System.out.print("\nDecimal Digits using for loop: ");
 	    for (int j : list2) {

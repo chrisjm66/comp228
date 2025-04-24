@@ -1,46 +1,51 @@
+// Chris Mangan. COMP228
+
 package adts;
 
 import interfaces.ListInterface;
+import iterators.DLLIterator;
 import nodes.DLLNode;
 
-public class DLList<E extends Comparable<E>> implements ListInterface<E> {
+public class DLList<E extends Comparable<E>> implements Iterable<E>, ListInterface<E> {
 	protected DLLNode<E> head;
 	protected DLLNode<E> tail;
 	protected DLLNode<E> location;
 	protected int numElements = 0;
 	protected boolean found;
+	protected boolean iterateForward;
 	
 	@Override
 	public void add(E element) {
 		DLLNode<E> newNode = new DLLNode<E>(element);
-		
+
 		if (head == null) {
 			head = tail = newNode;
 		} else {
-			DLLNode<E> location = head;
-			while (location != null) {
-				if (element.compareTo(location.getData()) > 0) {
-					location = location.getNext();
-				} else {
+			DLLNode<E> ptr = head;
+
+			while (ptr != null) {
+				if (((Comparable)element).compareTo(ptr.getData()) > 0) {
+					ptr = ptr.getNext();
+				}
+				else {
 					break;
 				}
 			}
 			
-			if (location == null) {
+			if (ptr == null) {
 				newNode.setPrev(tail);
 				tail.setNext(newNode);
 				tail = newNode;
-			} else if
-				 (location == head) {
-					newNode.setNext(head);
-					head.setPrev(newNode);
-					head = newNode;
-				} else {
-					newNode.setPrev(location.getPrev());
-					newNode.setNext(location.getNext());
-					location.getPrev().setNext(newNode);
-					location.setPrev(newNode);
-				}
+			} else if (ptr == head) {
+				newNode.setNext(head);
+				head.setPrev(newNode);
+				head = newNode;
+			} else {
+				newNode.setPrev(ptr.getPrev());
+				newNode.setNext(ptr);
+				ptr.getPrev().setNext(newNode);
+				ptr.setPrev(newNode);
+			}
 		}
 		numElements++;
 	}
@@ -50,17 +55,23 @@ public class DLList<E extends Comparable<E>> implements ListInterface<E> {
 		find(element);
 		
 		if (found) {
-			if (location == head) {
+			if (numElements == 1) {
+				head = tail = null;
+			}
+			else if (location == head) {
 				location.getNext().setPrev(null);
+				head = location.getNext();
 			} else if (location == tail) {
 				location.getPrev().setNext(null);
+				tail = location.getPrev();
 			} else {
 				location.getPrev().setNext(location.getNext());
 				location.getNext().setPrev(location.getPrev());
+
 				location.setData(null);
 				location = null;
-				numElements--;
 			}
+			numElements--;
 			return true;
 		}
 		
@@ -79,21 +90,9 @@ public class DLList<E extends Comparable<E>> implements ListInterface<E> {
 
 	@Override
 	public boolean contains(E element) {
-		DLLNode<E> ptr = head;
-		while (ptr.getNext() != null) {
-			if (ptr.getData().equals(element)) {
-				DLLNode<E> prev = ptr.getPrev();
-				DLLNode<E> next = ptr.getNext();
-				prev.setNext(next);
-				next.setPrev(prev);
-				ptr.setData(null);
-				
-				return true;
-			}
-			ptr = ptr.getNext();
-		}
-		
-		return false;
+		find(element);
+
+		return found;
 	}
 
 	@Override
@@ -111,12 +110,16 @@ public class DLList<E extends Comparable<E>> implements ListInterface<E> {
 	public E get(int index) {
 		location = head;
 		for (int i = 0; i < index; i++) {
-			location = head.getNext();
+			location = location.getNext();
 		}
 		
 		return location.getData();
 	}
-	
+
+	public DLLIterator<E> iterator() {
+		return new DLLIterator<E>(head, tail, iterateForward);
+	}
+
 	private void find(E element) {
 		found = false;
 		location = head;
@@ -131,4 +134,21 @@ public class DLList<E extends Comparable<E>> implements ListInterface<E> {
 		}
 	}
 
+	public String toString() {
+		DLLNode<E> ptr = head;
+		StringBuilder result = new StringBuilder();
+
+		while (ptr != null) {
+			result.append(ptr.getData());
+			result.append("\n");
+
+			ptr = ptr.getNext();
+		}
+
+		return result.toString();
+	}
+
+	public void setIterateForward(boolean iterateForward) {
+		this.iterateForward = iterateForward;
+	}
 }

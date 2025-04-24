@@ -5,8 +5,8 @@ import adts.*;
 public class duplicateDogList {
 
 	public static void main(String[] args) {
-        
-        ArrayBasedList<String> dogs = new ArrayBasedList<>(12);
+
+        DLList<String> dogs = new DLList<String>();
         
         dogs.add("Lassie");
         dogs.add("Rin Tin Tin");
