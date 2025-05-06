@@ -154,8 +154,19 @@ public class Sorts {
 
   
   static void insertionSort() {
+	  for (int i = 1; i < SIZE; i++) {
+          int ptr = values[i];
+          int j = i - 1;
 
-	  // insertion sort goes here
+          while (j >= 0 && values[j] > ptr) {
+              comparisons++;
+              swaps++;
+              values[j + 1] = values[j];
+              j = j - 1;
+          }
+
+          values[j + 1] = ptr;
+      }
   
   }
   

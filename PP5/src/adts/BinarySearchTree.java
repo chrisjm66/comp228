@@ -17,7 +17,9 @@ public class BinarySearchTree<T extends Comparable<T>>
              implements BSTInterface<T>, Iterable<T> {
 	
 	protected BSTNode<T> root;   
-	
+	protected BSTNode<T> ptr; // for use with PP5
+	protected BSTNode<T> tgt; // for use with PP5
+
 	boolean found;   // used by remove
 	
 	T[] rebalanceArray;  // for rebalancing the tree
@@ -296,5 +298,60 @@ public class BinarySearchTree<T extends Comparable<T>>
 			recRebalance(mid+1, last);
 		}
 	}
-	
+
+	public int treeHeight() {
+		return recTreeHeight(root);
+	}
+
+	private int recTreeHeight(BSTNode<T> tree) {
+		// check if empty
+		if (tree == null) {
+			return 0;
+		}
+
+		int leftHeight, rightHeight;
+		leftHeight = recTreeHeight(root.getLeft());
+		rightHeight = recTreeHeight(root.getRight());
+
+		return Math.max(leftHeight, rightHeight) + 1; // returns whichever is maximum
+	}
+
+	public int treeHeight2() {
+		// check if empty
+		if (root == null) {
+			return -1;
+		}
+
+		int height = -1;
+		ArrayList<BSTNode<T>> list = new ArrayList<BSTNode<T>>();
+		list.add(root);
+
+		while (!list.isEmpty()) {
+			height++;
+
+			while (!list.isEmpty()) {
+				BSTNode<T> node = list.removeFirst();
+
+				if (node.getLeft() != null) {
+					list.add(node.getLeft());
+				}
+
+				if (node.getRight() != null) {
+					list.add(node.getRight());
+				}
+			}
+
+		}
+
+		return height;
+	}
+
+	public boolean isPerfect() {
+
+	}
+
+	@Override
+	public String toString() {
+
+	}
 }
