@@ -19,7 +19,7 @@ public class Sorts {
 
   static int comparisons, swaps = 0;   // comparison and swap counts        
   
-  static boolean randomValues = true;
+  static boolean randomValues = false;
   
   static int[] fixedTestValues = new int[]
 	  /**/
@@ -147,9 +147,26 @@ public class Sorts {
   }
   
   static void betterBubble() {
+      int prevSwap = SIZE - 1; // these are used so we aren't swapping stuff that has already been modified. saves comparisons
 
-	  // better bubble sort goes here
-  
+      for (int i = 0; i < SIZE-1; i++) {
+          int currSwap = -1;
+          boolean sorted = true; // this also saves a lot of time by seeing if any swaps were done, and if not, returning
+
+          for (int j = 0; j < prevSwap; j++) {
+              comparisons++;
+              if (values[j] > values[j + 1]) {
+                  swap(j, j+1);
+                  currSwap = j;
+                  sorted = false;
+              }
+          }
+
+          if (sorted) {
+              return;
+          }
+          prevSwap = currSwap;
+      }
   }
 
   
