@@ -241,6 +241,9 @@ public class BinarySearchTree<T extends Comparable<T>>
 		case POSTORDER:
 			postOrder(root);
 			break;
+		case RANDOM:
+			random(root);
+			break;
 		}
 
 		return new BSTIterator(travList); 
@@ -267,6 +270,21 @@ public class BinarySearchTree<T extends Comparable<T>>
 			postOrder(tree.getLeft());
 			postOrder(tree.getRight());
 			travList.add(tree.getData());
+		}
+	}
+
+	private void random(BSTNode<T> tree) {
+		if (tree != null) {
+			int random = (int)(Math.random() * 2);
+			if (random == 0) {
+				random(tree.getLeft());
+				random(tree.getRight());
+				travList.add(tree.getData());
+			} else {
+				random(tree.getRight());
+				random(tree.getLeft());
+				travList.add(tree.getData());
+			}
 		}
 	}
 
@@ -300,7 +318,8 @@ public class BinarySearchTree<T extends Comparable<T>>
 	}
 
 	public int treeHeight() {
-		return recTreeHeight(root);
+		int height = recTreeHeight(root);
+		return height == 0 ? -1 : height; // subtracting -1 since the method adds one for functionality purposes;
 	}
 
 	private int recTreeHeight(BSTNode<T> tree) {
@@ -310,8 +329,8 @@ public class BinarySearchTree<T extends Comparable<T>>
 		}
 
 		int leftHeight, rightHeight;
-		leftHeight = recTreeHeight(root.getLeft());
-		rightHeight = recTreeHeight(root.getRight());
+		leftHeight = recTreeHeight(tree.getLeft());
+		rightHeight = recTreeHeight(tree.getRight());
 
 		return Math.max(leftHeight, rightHeight) + 1; // returns whichever is maximum
 	}
@@ -322,36 +341,75 @@ public class BinarySearchTree<T extends Comparable<T>>
 			return -1;
 		}
 
-		int height = -1;
+		int height = 0;
 		ArrayList<BSTNode<T>> list = new ArrayList<BSTNode<T>>();
 		list.add(root);
 
 		while (!list.isEmpty()) {
 			height++;
+			ArrayList<BSTNode<T>> newList = new ArrayList<BSTNode<T>>();
 
 			while (!list.isEmpty()) {
-				BSTNode<T> node = list.removeFirst();
-
+				BSTNode<T> node = list.remove(0);
 				if (node.getLeft() != null) {
-					list.add(node.getLeft());
+					newList.add(node.getLeft());
 				}
 
 				if (node.getRight() != null) {
-					list.add(node.getRight());
+					newList.add(node.getRight());
 				}
 			}
 
+			list = newList;
 		}
 
 		return height;
 	}
 
 	public boolean isPerfect() {
+		return recIsPerfect(root, treeHeight());
+	}
 
+	private boolean recIsPerfect(BSTNode<T> tree, int height) {
+		if (tree == null) {
+			return true;
+		}
+
+		// if both nodes are null then it is a perfect tree at this current level.
+		if (tree.getLeft() == null && tree.getRight() == null) {
+			return height == 1; // this checks if the height is 1 (no more leafs after)
+		}
+
+		// if one or the other (we already checked both) are not null then it is not a perfect tree
+		if (tree.getLeft() == null || tree.getRight() == null) {
+			return false;
+		}
+
+		return recIsPerfect(tree.getLeft(), height - 1)
+		&& recIsPerfect(tree.getRight(), height - 1);
 	}
 
 	@Override
 	public String toString() {
+		setTraversalType("pre");
 
+		StringBuilder builder = new StringBuilder();
+		builder.append("Root: " + root.getData());
+		builder.append("\nLeft: " + recToString(root.getLeft()));
+		builder.append("\nRight: " + recToString(root.getRight()));
+
+		return builder.toString();
+	}
+
+	private String recToString(BSTNode<T> tree) {
+		String str = "";
+
+		if (tree == null) {
+			return "";
+		}
+
+		str +=
+		str += recToString(tree.getLeft()) + "/ " + tree.getData() + "\\ " + recToString(tree.getRight());
+		return str;
 	}
 }
